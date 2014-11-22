@@ -34,7 +34,14 @@ class Customer extends \yii\db\ActiveRecord
             [['customer_name', 'customer_password', 'custmer_email'], 'required'],
             [['customer_role'], 'boolean'],
             [['customer_name', 'customer_password'], 'string', 'max' => 30],
-            [['custmer_email'], 'string', 'max' => 50]
+            [['customer_email'], 'string', 'max' => 50],
+			[['customer_email'],'email'],
+			[['customer_name', 'customer_email'], 'trim'],
+			[['customer_name', 'customer_email'], 'unique'],
+			[['customer_password'], 'string', 'max' => 10],
+			[['customer_password'], 'string', 'min' => 6],
+			[['customer_password'], 'match', 'pattern'=>'/[A-Z]{1}/', 'message' => 'Password must contain at least 1 capital letter.'],
+			[['customer_password'], 'match', 'pattern'=>'/\d+/', 'message' => 'Password must contain at least 1 number.'],
         ];
     }
 

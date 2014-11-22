@@ -37,7 +37,8 @@ class Product extends \yii\db\ActiveRecord
             [['product_price'], 'number'],
             [['product_quantity'], 'integer'],
             [['product_name', 'product_short_descr'], 'string', 'max' => 100],
-            [['product_description'], 'string', 'max' => 1000]
+            [['product_description'], 'string', 'max' => 1000],
+			[['product_price'], 'double'],
         ];
     }
 
