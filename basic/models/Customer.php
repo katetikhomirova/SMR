@@ -24,6 +24,11 @@ class Customer extends \yii\db\ActiveRecord
     {
         return 'customer';
     }
+	
+	public static function isEmpty($model)
+	{
+		return !empty($model->password);
+	}
 
     /**
      * @inheritdoc
@@ -38,10 +43,12 @@ class Customer extends \yii\db\ActiveRecord
 			[['customer_email'],'email'],
 			[['customer_name', 'customer_email'], 'trim'],
 			[['customer_name', 'customer_email'], 'unique'],
-			[['customer_password'], 'string', 'max' => 10],
+			[['customer_password'], 'string', 'max' => 10, 'min' => 6, 'when'=> Customer::isEmpty ],
 			[['customer_password'], 'string', 'min' => 6],
-			[['customer_password'], 'match', 'pattern'=>'/[A-Z]{1}/', 'message' => 'Password must contain at least 1 capital letter.'],
-			[['customer_password'], 'match', 'pattern'=>'/\d+/', 'message' => 'Password must contain at least 1 number.'],
+			[['customer_password'], 'match', 'pattern'=>'/[A-Z]{1}/', 'when'=> Customer::isEmpty, 'message' => 'Password must contain at least 1 capital letter.'],
+			[['customer_password'], 'match', 'pattern'=>'/\d+/', 'when'=> Customer::isEmpty, 'message' => 'Password must contain at least 1 number.'],
+			[['customer_password'],'required', 'on' => 'create'],
+			
         ];
     }
 
